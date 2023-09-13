@@ -41,8 +41,7 @@ bool insereAlunoNaLista(ListaAlunos* listaAlunos, Aluno aluno, int posicao) {
         printf("Insercao em posicao invalida!!!\n");
         return false;
     }
-    
-    // Validar matrícula duplicada
+
     for (int i = 0; i < listaAlunos->numElem; i++) {
         if (listaAlunos->alunos[i].matricula == aluno.matricula) {
             printf("Matricula duplicada! Nao pode inserir.\n");
@@ -51,7 +50,7 @@ bool insereAlunoNaLista(ListaAlunos* listaAlunos, Aluno aluno, int posicao) {
     }
     
     if (posicao > listaAlunos->numElem)
-        posicao = listaAlunos->numElem;  // Inserir no final se a posição for maior que o número de elementos
+        posicao = listaAlunos->numElem;  
     
     for (int index = listaAlunos->numElem; index > posicao; index--) {
         listaAlunos->alunos[index] = listaAlunos->alunos[index - 1];
@@ -67,44 +66,44 @@ bool excluiElementoDaLista(ListaAlunos* listaAlunos, int posicao) {
         return false;
     }
     
-    // Resetar os valores na posição da struct removida
+    
     for (int i = posicao; i < listaAlunos->numElem - 1; i++) {
         listaAlunos->alunos[i] = listaAlunos->alunos[i + 1];
     }
     
-    // Zerar os valores do último elemento
+
     memset(&listaAlunos->alunos[listaAlunos->numElem - 1], 0, sizeof(Aluno));
     
     listaAlunos->numElem--;
     return true;
 }
 
-// Busca sequencial por nome de aluno
+
 int buscaAlunoPorNome(ListaAlunos* listaAlunos, char* nome) {
     for (int i = 0; i < listaAlunos->numElem; i++) {
         if (strcmp(listaAlunos->alunos[i].nome, nome) == 0) {
             return i;
         }
     }
-    return -1; // Nome não encontrado
+    return -1;
 }
 
-// Busca sequencial por matrícula de aluno
+
 int buscaAlunoPorMatricula(ListaAlunos* listaAlunos, int matricula) {
     for (int i = 0; i < listaAlunos->numElem; i++) {
         if (listaAlunos->alunos[i].matricula == matricula) {
             return i;
         }
     }
-    return -1; // Matrícula não encontrada
+    return -1;
 }
 
-// Retorno do enésimo aluno na lista
+
 Aluno retornaAlunoNaPosicao(ListaAlunos* listaAlunos, int posicao) {
     if (posicao >= 0 && posicao < listaAlunos->numElem) {
         return listaAlunos->alunos[posicao];
     } else {
-        Aluno alunoVazio; // Retornar uma struct vazia se a posição for inválida
+        Aluno alunoVazio; 
         memset(&alunoVazio, 0, sizeof(Aluno));
         return alunoVazio;
     }
@@ -128,7 +127,7 @@ int main() {
     excluiElementoDaLista(&listaAlunos, 1);
     exibeLista(&listaAlunos);
 
-    // Teste das novas funcionalidades
+    
     int posicaoNome = buscaAlunoPorNome(&listaAlunos, "Ana");
     if (posicaoNome != -1) {
         printf("Aluno encontrado por nome:\n");
@@ -145,7 +144,7 @@ int main() {
         printf("Aluno nao encontrado por matricula.\n");
     }
 
-    int n = 1; // Obter o segundo aluno na lista
+    int n = 1;
     Aluno enesimoAluno = retornaAlunoNaPosicao(&listaAlunos, n);
     if (strcmp(enesimoAluno.nome, "") != 0) {
         printf("Enesimo aluno na lista (posicao %d):\n", n);
